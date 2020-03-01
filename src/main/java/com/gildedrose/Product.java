@@ -14,6 +14,15 @@ public class Product {
         this.quality = quality;
     }
 
+    public boolean nameEquals(String name){
+        return this.name.equals(name);
+    }
+
+    public boolean nameNotEquals(String name){
+        return !this.name.equals(name);
+    }
+
+
     @Override
     public String toString() {
         return this.name + ", " + this.sellIn + ", " + this.quality;

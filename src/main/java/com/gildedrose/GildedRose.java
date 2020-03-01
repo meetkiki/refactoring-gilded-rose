@@ -16,21 +16,19 @@ class GildedRose {
     }
 
     private GildedRose updateItemQuality(Product item) {
-        if (!item.name.equals("Aged Brie")
-                && !item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-            if (item.quality > 0) {
-                sellInMinusOneIfNotSulfuras(item);
+        if (item.nameNotEquals("Aged Brie")
+                && item.nameNotEquals("Backstage passes to a TAFKAL80ETC concert")) {
+            sellInMinusOneIfNotSulfuras(item);
+            return this;
+        }
+        AutoIncrementQualityLessThanFifty(item);
+        if (item.nameEquals("Backstage passes to a TAFKAL80ETC concert")) {
+            if (item.sellIn < 11) {
+                AutoIncrementQualityLessThanFifty(item);
             }
-        } else {
-            AutoIncrementQualityLessThanFifty(item);
-            if (item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                if (item.sellIn < 11) {
-                    AutoIncrementQualityLessThanFifty(item);
-                }
 
-                if (item.sellIn < 6) {
-                    AutoIncrementQualityLessThanFifty(item);
-                }
+            if (item.sellIn < 6) {
+                AutoIncrementQualityLessThanFifty(item);
             }
         }
         return this;
@@ -44,11 +42,9 @@ class GildedRose {
 
     private GildedRose expiredHandle(Product item) {
         if (item.sellIn < 0) {
-            if (!item.name.equals("Aged Brie")) {
-                if (!item.name.equals("Backstage passes to a TAFKAL80ETC concert")) {
-                    if (item.quality > 0) {
-                        sellInMinusOneIfNotSulfuras(item);
-                    }
+            if (item.nameNotEquals("Aged Brie")) {
+                if (item.nameNotEquals("Backstage passes to a TAFKAL80ETC concert")) {
+                    sellInMinusOneIfNotSulfuras(item);
                 } else {
                     item.quality = 0;
                 }
@@ -60,14 +56,14 @@ class GildedRose {
     }
 
     private GildedRose qualityMinusOneIfNotSulfuras(Product item) {
-        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+        if (item.nameNotEquals("Sulfuras, Hand of Ragnaros")) {
             item.sellIn = item.sellIn - 1;
         }
         return this;
     }
 
     private GildedRose sellInMinusOneIfNotSulfuras(Product item) {
-        if (!item.name.equals("Sulfuras, Hand of Ragnaros")) {
+        if (item.quality > 0 && item.nameNotEquals("Sulfuras, Hand of Ragnaros")) {
             item.quality = item.quality - 1;
         }
         return this;
