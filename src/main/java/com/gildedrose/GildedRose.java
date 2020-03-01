@@ -42,16 +42,17 @@ class GildedRose {
 
 
     private GildedRose expiredHandle(Product item) {
-        if (item.sellIn < 0) {
-            if (item.nameNotEquals(AGED_BRIE)) {
-                if (item.nameNotEquals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
-                    sellInMinusOneIfNotSulfuras(item);
-                } else {
-                    item.quality = 0;
-                }
+        if (item.sellIn >= 0) {
+            return this;
+        }
+        if (item.nameNotEquals(AGED_BRIE)) {
+            if (item.nameNotEquals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
+                sellInMinusOneIfNotSulfuras(item);
             } else {
-                item.autoIncrementQualityLessThanFifty();
+                item.quality = 0;
             }
+        } else {
+            item.autoIncrementQualityLessThanFifty();
         }
         return this;
     }
