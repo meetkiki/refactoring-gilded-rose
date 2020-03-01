@@ -22,6 +22,12 @@ public class Product {
         return !this.name.equals(name);
     }
 
+    public Product autoIncrementQualityLessThanFifty() {
+        if (this.quality < 50) {
+            this.quality = this.quality + 1;
+        }
+        return this;
+    }
 
     @Override
     public String toString() {

@@ -3,6 +3,12 @@ package com.gildedrose;
 import java.util.Arrays;
 
 class GildedRose {
+    private static final String AGED_BRIE = "Aged Brie";
+    private static final String SULFURAS_HAND_OF_RAGNAROS = "Sulfuras, Hand of Ragnaros";
+    private static final String BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT
+            = "Backstage passes to a TAFKAL80ETC concert";
+
+
     Product[] items;
 
     public GildedRose(Product[] items) {
@@ -16,54 +22,49 @@ class GildedRose {
     }
 
     private GildedRose updateItemQuality(Product item) {
-        if (item.nameNotEquals("Aged Brie")
-                && item.nameNotEquals("Backstage passes to a TAFKAL80ETC concert")) {
+        if (item.nameNotEquals(AGED_BRIE)
+                && item.nameNotEquals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
             sellInMinusOneIfNotSulfuras(item);
             return this;
         }
-        AutoIncrementQualityLessThanFifty(item);
-        if (item.nameEquals("Backstage passes to a TAFKAL80ETC concert")) {
+        item.autoIncrementQualityLessThanFifty();
+        if (item.nameEquals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
             if (item.sellIn < 11) {
-                AutoIncrementQualityLessThanFifty(item);
+                item.autoIncrementQualityLessThanFifty();
             }
 
             if (item.sellIn < 6) {
-                AutoIncrementQualityLessThanFifty(item);
+                item.autoIncrementQualityLessThanFifty();
             }
         }
         return this;
     }
 
-    private void AutoIncrementQualityLessThanFifty(Product item) {
-        if (item.quality < 50) {
-            item.quality = item.quality + 1;
-        }
-    }
 
     private GildedRose expiredHandle(Product item) {
         if (item.sellIn < 0) {
-            if (item.nameNotEquals("Aged Brie")) {
-                if (item.nameNotEquals("Backstage passes to a TAFKAL80ETC concert")) {
+            if (item.nameNotEquals(AGED_BRIE)) {
+                if (item.nameNotEquals(BACKSTAGE_PASSES_TO_A_TAFKAL80ETC_CONCERT)) {
                     sellInMinusOneIfNotSulfuras(item);
                 } else {
                     item.quality = 0;
                 }
             } else {
-                AutoIncrementQualityLessThanFifty(item);
+                item.autoIncrementQualityLessThanFifty();
             }
         }
         return this;
     }
 
     private GildedRose qualityMinusOneIfNotSulfuras(Product item) {
-        if (item.nameNotEquals("Sulfuras, Hand of Ragnaros")) {
+        if (item.nameNotEquals(SULFURAS_HAND_OF_RAGNAROS)) {
             item.sellIn = item.sellIn - 1;
         }
         return this;
     }
 
     private GildedRose sellInMinusOneIfNotSulfuras(Product item) {
-        if (item.quality > 0 && item.nameNotEquals("Sulfuras, Hand of Ragnaros")) {
+        if (item.quality > 0 && item.nameNotEquals(SULFURAS_HAND_OF_RAGNAROS)) {
             item.quality = item.quality - 1;
         }
         return this;
